@@ -16,6 +16,7 @@ const ShowCustomers = () => {
     }, [customerID, dispatch]);
 
     const { loading, customersList, responseCustomersList } = useSelector(state => state.user);
+    
     const customersColumns = [
         { id: 'name', label: 'Customer Name', minWidth: 170 },
         { id: 'quantity', label: 'Product Quantity', minWidth: 100 },

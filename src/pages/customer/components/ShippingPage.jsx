@@ -151,7 +151,7 @@ const ShippingPage = ({ handleNext, profile }) => {
   return (
     <React.Fragment>
       {
-        shippingData && Object.keys(shippingData).length > 0 ? 
+      shippingData && Object.keys(shippingData).length > 0 ? 
           <React.Fragment>
             <StyledTypography variant="h6">
               Address : {shippingData && shippingData.address}
