@@ -110,6 +110,10 @@ The maximum attainable points for this project are 1000. The points are distribu
 
 ![Pie distribution](<src/assets/Screenshot 2024-07-29 at 6.29.01 PM.png>)
 
+## Demo Video
+
+![Demo Video](public/BreakingBugF.mov)
+
 
 ### One Click Deploy
 
