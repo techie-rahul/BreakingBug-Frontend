@@ -61,7 +61,7 @@ const AddedToCartSection = () => {
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
                     <GreenButton
                         variant="contained"
-                        onClick={() => navigate("/addproduct")}
+                        onClick={() => navigate("/Seller/addproduct")}
                     >
                         Add Products
                     </GreenButton>

@@ -120,14 +120,13 @@ const userSlice = createSlice({
 
         removeSpecificProduct: (state, action) => {
             const productIdToRemove = action.payload;
-            state.currentUser.cartDetails = state.currentUser.cartDetails.filter(
-              (cartItem) => cartItem._id !== productIdToRemove
-
+            const updatedCartDetails = state.currentUser.cartDetails.filter(
+                (cartItem) => cartItem._id !== productIdToRemove
             );
 
-            
-          },
-        
+            state.currentUser.cartDetails = updatedCartDetails;
+            updateCartDetailsInLocalStorage(updatedCartDetails);
+        },
 
         fetchProductDetailsFromCart: (state, action) => {
             const productIdToFetch = action.payload;
@@ -171,7 +170,9 @@ const userSlice = createSlice({
 
         isTokenValid: (state) => {
             const decodedToken = jwtDecode(state.currentToken);
-            if (state.currentToken) {              state.isLoggedIn = true;
+
+            if (state.currentToken && decodedToken.exp * 1000 > Date.now()) {
+                state.isLoggedIn = true;
             } else {
                 localStorage.removeItem('user');
                 state.currentUser = null;
@@ -302,16 +303,18 @@ export const {
     getFailed,
     getError,
     getSearchFailed,
+    setFilteredProducts,
+    getCustomersListFailed,
     customersListSuccess,
     getSpecificProductsFailed,
     specificProductSuccess,
+
     addToCart,
     removeFromCart,
     removeSpecificProduct,
     removeAllFromCart,
     fetchProductDetailsFromCart,
     updateCurrentUser,
-    
 } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

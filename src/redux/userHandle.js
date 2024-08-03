@@ -49,7 +49,7 @@ export const addStuff = (address, fields) => async (dispatch) => {
 
     try {
         const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/${address}`, fields, {
-            headers: { 'Content-Type': 'application/json' },---
+            headers: { 'Content-Type': 'application/json' },
         });
 
         if (result.data.message) {
@@ -66,7 +66,7 @@ export const updateStuff = (fields, id, address) => async (dispatch) => {
 
     try {
         const result = await axios.put(`${process.env.REACT_APP_BASE_URL}/${address}/${id}`, fields, {
-
+            headers: { 'Content-Type': 'application/json' },
         });
         if (result.data.message) {
             dispatch(updateFailed(result.data.message));
@@ -97,18 +97,21 @@ export const deleteStuff = (id, address) => async (dispatch) => {
 
 export const updateCustomer = (fields, id) => async (dispatch) => {
     dispatch(updateCurrentUser(fields));
-    await axios.put(`${process.env.REACT_APP_BASE_URL}/CustomerUpdate/${id}`, fields);
-};
+
+    const newFields = { ...fields };
+    delete newFields.token;
+
+    try {
+        await axios.put(`${process.env.REACT_APP_BASE_URL}/CustomerUpdate/${id}`, newFields, {
+            headers: { 'Content-Type': 'application/json' },
+        });
 
         dispatch(stuffUpdated());
 
-      } catch (error) {
-
+    } catch (error) {
         dispatch(getError(error));
-
     }
-
-    }
+}
 
 export const getProductsbySeller = (id) => async (dispatch) => {
     dispatch(getRequest());
@@ -159,7 +162,7 @@ export const getProductDetails = (id) => async (dispatch) => {
     }
 }
 
-export const getCustomers = (id) => async (dispatch) => {
+export const getCustomers = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
@@ -201,7 +204,7 @@ export const getSearchedProducts = (address, key) => async (dispatch) => {
             dispatch(getSearchFailed(result.data.message));
         }
         else {
-            dispatch(setFilteredProducts(result.files));
+            dispatch(setFilteredProducts(result.data));
         }
 
     } catch (error) {

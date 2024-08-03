@@ -35,7 +35,7 @@ const ViewProduct = () => {
     const deleteHandler = (reviewId) => {
         const fields = { reviewId };
 
-        dispatch(updateStuff(fields, "deleteProductReview"));
+        dispatch(updateStuff(fields, productID, "deleteProductReview"));
     };
 
     const reviewer = currentUser && currentUser._id

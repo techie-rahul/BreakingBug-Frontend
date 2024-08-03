@@ -17,11 +17,11 @@ const CustomerOrders = () => {
 
     const dispatch = useDispatch()
 
-    const { currentUser, loading, responseSpecificProducts } = useSelector(state => state.user);
+    const { currentUser, loading, specificProductData, responseSpecificProducts } = useSelector(state => state.user);
 
     useEffect(() => {
-        dispatch(getSpecificProducts("getOrderedProductsByCustomer"));
-    }, [dispatch]);
+        dispatch(getSpecificProducts(currentUser._id, "getOrderedProductsByCustomer"));
+    }, [dispatch, currentUser]);
 
     const sortOptions = [
         { value: 'oldest', label: 'Oldest' },

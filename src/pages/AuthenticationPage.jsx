@@ -29,16 +29,18 @@ const AuthenticationPage = ({ mode, role }) => {
     const [shopNameError, setShopNameError] = useState(false);
 
     const handleSubmit = (event) => {
+        event.preventDefault();
 
-        let email, password;
+        const email = event.target.email.value;
+        const password = event.target.password.value;
 
-        if (!password) {
+        if (!email || !password) {
             if (!email) setEmailError(true);
             if (!password) setPasswordError(true);
             return;
         }
 
-         if (mode === "Register") {
+        if (mode === "Register") {
             const name = event.target.userName.value;
 
             if (!name) {

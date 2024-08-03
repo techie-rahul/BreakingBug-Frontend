@@ -28,7 +28,7 @@ import { updateCustomer } from '../redux/userHandle';
 const Navbar = () => {
     const { currentUser, currentRole } = useSelector(state => state.user);
 
-    const totalQuantity = currentUser && currentUser.cartDetails && 0;
+    const totalQuantity = currentUser && currentUser.cartDetails && currentUser.cartDetails.reduce((total, item) => total + item.quantity, 0);
 
     const navigate = useNavigate()
     const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const Navbar = () => {
             console.log(currentUser);
             dispatch(updateCustomer(currentUser, currentUser._id));
         }
-    }, [currentRole, currentUser, dispatch, ancorElNav])
+    }, [currentRole, currentUser, dispatch])
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -50,11 +50,11 @@ const Navbar = () => {
     const [isCartOpen, setIsCartOpen] = React.useState(false);
 
     // Cart
-    const handleOpen Cart = () => {
+    const handleOpenCart = () => {
         setIsCartOpen(true);
     };
 
-    const handleOpenCart = () => {
+    const handleCloseCart = () => {
         setIsCartOpen(false);
     };
 
@@ -164,15 +164,16 @@ const Navbar = () => {
                                         horizontal: 'left',
                                     }}
                                     open={Boolean(anchorElNav)}
-                                  
+                                    onClose={handleCloseNavMenu}
                                     onClick={handleCloseUserMenu}
                                     sx={{
                                         display: { xs: 'block', md: 'none' },
                                     }}
                                 >
                                     <MenuItem onClick={() => {
-                                      navigate("/Customerlogin")
-                                     }}>
+                                        navigate("/Customerlogin")
+                                        handleCloseNavMenu()
+                                    }}>
                                         <Typography textAlign="center">Sign in as customer</Typography>
                                     </MenuItem>
                                     <MenuItem onClick={() => {

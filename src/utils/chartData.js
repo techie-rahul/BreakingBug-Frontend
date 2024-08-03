@@ -78,8 +78,8 @@ export const ChartDataMonth = {
 };
 
 export const ChartDataYear = {
-
-
+    type: 'line',
+    height: 90,
     options: {
         chart: {
             sparkline: {
@@ -102,7 +102,21 @@ export const ChartDataYear = {
             min: 0,
             max: 100
         },
-
+        tooltip: {
+            theme: 'dark',
+            fixed: {
+                enabled: false
+            },
+            x: {
+                show: false
+            },
+            y: {
+                title: 'Total Order'
+            },
+            marker: {
+                show: false
+            }
+        }
     },
     series: [
         {

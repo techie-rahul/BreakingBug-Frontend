@@ -6,9 +6,9 @@ import emptyCart from "../../../assets/cartimg.png"
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 import { addToCart, removeAllFromCart, removeFromCart } from '../../../redux/userSlice';
-import { BasicButton, LightPurpleButton } from '../../../utils/styles';
+import { BasicButton, LightPurpleButton } from '../../../utils/buttonStyles';
 import { useNavigate } from 'react-router-dom';
-import { updateCustomer } from '../../../redux/userSlice';
+import { updateCustomer } from '../../../redux/userHandle';
 
 const Cart = ({ setIsCartOpen }) => {
 
@@ -32,7 +32,7 @@ const Cart = ({ setIsCartOpen }) => {
         dispatch(removeAllFromCart());
     };
 
-    const totalQuantity = cartDetails.drop((total, item) => total + item.quantity, 0);
+    const totalQuantity = cartDetails.reduce((total, item) => total + item.quantity, 0);
     const totalOGPrice = cartDetails.reduce((total, item) => total + (item.quantity * item.price.mrp), 0);
     const totalNewPrice = cartDetails.reduce((total, item) => total + (item.quantity * item.price.cost), 0);
 
@@ -52,11 +52,10 @@ const Cart = ({ setIsCartOpen }) => {
         console.log(currentUser);
         dispatch(updateCustomer(currentUser, currentUser._id));
         setIsCartOpen(false)
-        navigate("/product/Checkout")
+        navigate("/Checkout")
     }
 
     const priceContainerRef = useRef(null);
-
 
     const handleScrollToBottom = () => {
         if (priceContainerRef.current) {
@@ -79,7 +78,7 @@ const Cart = ({ setIsCartOpen }) => {
                 }}>
                     <KeyboardDoubleArrowLeftIcon /> Continue Shopping
                 </LightPurpleButton>
-                {cartDetails.length < 0 || (
+                {cartDetails.length > 0 && (
                     <IconButton
                         sx={{ backgroundColor: "#3a3939", color: "white" }}
                         onClick={handleScrollToTop}
@@ -181,7 +180,7 @@ const Cart = ({ setIsCartOpen }) => {
                 </CardGrid>
             )}
 
-            {cartDetails.length > 0 || (
+            {cartDetails.length > 0 && (
                 <BottomContainer>
                     <Button
                         variant="contained"

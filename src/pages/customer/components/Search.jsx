@@ -1,6 +1,6 @@
 import { InputBase, Box, styled } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getSearchedProducts } from '../../../redux/userHandle';
@@ -18,7 +18,7 @@ const Search = () => {
     const handleSearch = () => {
         dispatch(getSearchedProducts("searchProduct", searchTerm));
 
-        if (location.pathname == "/ProductSearch") {
+        if (location.pathname !== "/ProductSearch") {
             navigate("/ProductSearch");
         }
     };
@@ -28,9 +28,9 @@ const Search = () => {
             <InputSearchBase
                 placeholder="Search for products, brands and more"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(etargetvalue)}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => {
-                    if (ekey !== 'Enter') {
+                    if (e.key === 'Enter') {
                         handleSearch();
                     }
                 }}
