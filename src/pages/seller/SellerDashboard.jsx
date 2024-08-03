@@ -61,7 +61,7 @@ const SellerDashboard = () => {
                         >
                             <ListIcon />
                         </IconButton>
-                        
+
                         {/* Desktop */}
                         <Typography
                             component="h1"
